@@ -38,17 +38,18 @@ public class DataBaseTest {
     public void setUp() {
         Reader reader = Resources.getResourceAsReader(myBatisLocation());
         factory = new SqlSessionFactoryBuilder().build(reader);
-
-        agentsMapper = factory.openSession().getMapper(AgentsMapper.class);
-        customerMapper = factory.openSession().getMapper(CustomerMapper.class);
-        ordersMapper = factory.openSession().getMapper(OrdersMapper.class);
-
         session = factory.openSession();
+
+        agentsMapper = session.getMapper(AgentsMapper.class);
+        customerMapper = session.getMapper(CustomerMapper.class);
+        ordersMapper = session.getMapper(OrdersMapper.class);
     }
 
     @AfterEach
     public void tearDown() {
-        session.close();
+        if (session != null) {
+            session.close();
+        }
     }
 
     @Test
