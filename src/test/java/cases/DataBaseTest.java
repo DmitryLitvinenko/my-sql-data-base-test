@@ -26,7 +26,6 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 @ExtendWith(TestResultLoggerExtension.class)
 @DisplayName("My SQL data base check")
 public class DataBaseTest {
-    private static SqlSessionFactory factory = null;
     private static SqlSession session = null;
 
     private static AgentsMapper agentsMapper;
@@ -37,8 +36,7 @@ public class DataBaseTest {
     @BeforeEach
     public void setUp() {
         Reader reader = Resources.getResourceAsReader(myBatisLocation());
-        factory = new SqlSessionFactoryBuilder().build(reader);
-        session = factory.openSession();
+        session = new SqlSessionFactoryBuilder().build(reader).openSession();
 
         agentsMapper = session.getMapper(AgentsMapper.class);
         customerMapper = session.getMapper(CustomerMapper.class);
